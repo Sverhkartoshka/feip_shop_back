@@ -1,3 +1,5 @@
+import hashlib
+
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -6,6 +8,10 @@ from .models import Category, Product, User, Cart, Picture, Comment
 from .serializers import CategorySerializer, ProductSerializer, CatalogueSerializer, UserSerializer, CartSerializer, PictureSerializer, CommentSerializer
 from rest_framework import permissions
 from rest_framework.parsers import MultiPartParser, FormParser, FileUploadParser
+
+def h(pw):
+    result = hashlib.md5(pw.encode())
+    return result.hexdigest()
 
 class ProductView(APIView):
     parser_classes = (MultiPartParser, FormParser)
@@ -39,6 +45,7 @@ class CategoryView(APIView):
 class LogView(APIView):
     def post(self, request):
         user = request.data.get('user')
+        user["password"] = h(user["password"])
         if User.objects.filter(name = user["name"]).exists():
             usercheck = get_object_or_404(User.objects.all(), name=user["name"])
             if (usercheck.password == user["password"]):
@@ -48,6 +55,7 @@ class LogView(APIView):
 class RegView(APIView):
     def post(self, request):
         user = request.data.get('user')
+        user["password"] = h(user["password"])
         serializer = UserSerializer(data=user)
         if User.objects.filter(email = user["email"]).exists():
             return Response(False)

@@ -29,13 +29,19 @@ class User(models.Model):
 
 
 class Cart(models.Model):
-    product = models.ForeignKey(Product, on_delete = models.CASCADE)
     user = models.ForeignKey(User, on_delete = models.CASCADE)
     date = models.DateTimeField(auto_now_add=True, db_index=True)
 
     def __str__(self):
         return self.pk
-    
+
+class CartItem(models.Model):
+    product = models.ForeignKey(Product, on_delete = models.CASCADE)
+    cart = models.ForeignKey(Cart, on_delete = models.CASCADE)
+
+    def __str__(self):
+        return self.pk
+
 class Picture(models.Model):
     product = models.ForeignKey(Product, on_delete = models.CASCADE)
     image_url = models.ImageField(upload_to=img_upload_to)
