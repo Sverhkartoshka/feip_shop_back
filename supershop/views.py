@@ -30,8 +30,8 @@ class CatalogueView(APIView):
         permissions.IsAuthenticatedOrReadOnly
     ]
 
-    def get(self, request, classification):
-        q = Product.objects.filter(classification=classification)
+    def get(self, request, category):
+        q = Product.objects.filter(category=category)
         serializer = CatalogueSerializer(q, many=True)
         return Response(serializer.data)
     
