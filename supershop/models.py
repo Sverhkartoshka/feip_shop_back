@@ -33,14 +33,14 @@ class Cart(models.Model):
     date = models.DateTimeField(auto_now_add=True, db_index=True)
 
     def __str__(self):
-        return self.pk
+        return str(self.pk)
 
 class CartItem(models.Model):
     product = models.ForeignKey(Product, on_delete = models.CASCADE)
     cart = models.ForeignKey(Cart, on_delete = models.CASCADE)
 
     def __str__(self):
-        return self.pk
+        return self.product
 
 class Picture(models.Model):
     product = models.ForeignKey(Product, on_delete = models.CASCADE)

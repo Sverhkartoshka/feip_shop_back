@@ -20,8 +20,7 @@ class ProductView(APIView):
     ]
 
     def get(self, request, pk):
-        q = Product.objects.all()
-        req = get_object_or_404(q, pk=pk)
+        req = get_object_or_404(Product, pk=pk)
         serializer = ProductSerializer(req)
         return Response(serializer.data)
     
@@ -47,7 +46,7 @@ class LogView(APIView):
         user = request.data.get('user')
         user["password"] = h(user["password"])
         if User.objects.filter(name = user["name"]).exists():
-            usercheck = get_object_or_404(User.objects.all(), name=user["name"])
+            usercheck = get_object_or_404(User, name=user["name"])
             if (usercheck.password == user["password"]):
                 return Response(True)
         return Response(False)
