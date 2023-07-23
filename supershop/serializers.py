@@ -7,7 +7,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ['id', 'name', 'image_url', 'category', 'price', 'description']
+        fields = ['pk', 'name', 'image_url', 'category', 'price', 'description']
 
 class CatalogueSerializer(serializers.ModelSerializer):
     category = serializers.ReadOnlyField(source='category.id')
@@ -15,17 +15,17 @@ class CatalogueSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ['id', 'name', 'image_url', 'category']
+        fields = ['pk', 'name', 'image_url', 'category', 'price']
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ['id', 'name']
+        fields = ['pk', 'name']
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'name', 'password', 'email']
+        fields = ['pk', 'name', 'password', 'email']
 
 class CartSerializer(serializers.ModelSerializer):
     product = serializers.ReadOnlyField(source='product.id')
@@ -33,7 +33,7 @@ class CartSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Cart
-        fields = ['product', 'user', 'date']
+        fields = ['pk', 'product', 'user', 'date']
 
 class PictureSerializer(serializers.ModelSerializer):
     product = serializers.ReadOnlyField(source='product.id')
@@ -41,7 +41,7 @@ class PictureSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Picture
-        fields = ['id', 'product', 'image_url']
+        fields = ['pk', 'product', 'image_url']
 
 class CommentSerializer(serializers.ModelSerializer):
     user = serializers.ReadOnlyField(source='user.name')
