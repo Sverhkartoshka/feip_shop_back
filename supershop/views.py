@@ -45,8 +45,8 @@ class LogView(APIView):
     def post(self, request):
         user = request.data.get('user')
         user["password"] = h(user["password"])
-        if User.objects.filter(name = user["name"]).exists():
-            usercheck = get_object_or_404(User, name=user["name"])
+        if User.objects.filter(name = user["email"]).exists():
+            usercheck = get_object_or_404(User, email=user["email"])
             if (usercheck.password == user["password"]):
                 return Response(True)
         return Response(False)
